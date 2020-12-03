@@ -1,15 +1,28 @@
 import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { hydrate, render } from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-ReactDOM.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  document.getElementById("root")
-);
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  throw new Error("Missing root element");
+}
+if (rootElement.hasChildNodes()) {
+  hydrate(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+    rootElement
+  );
+} else {
+  render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+    rootElement
+  );
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
